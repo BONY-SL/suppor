@@ -20,18 +20,18 @@ ext {
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
 application {
     mainModule = 'org.suppor.p4_group_8_repo.application.suppor'
-    mainClass = 'org.suppor.p4_group_8_repo.application.suppor.HelloApplication'
+    mainClass = 'org.suppor.p4_group_8_repo.application.suppor.Main'
 }
 
 javafx {
     version = '17.0.6'
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.media'] // Add javafx.media module
 }
 
 dependencies {
