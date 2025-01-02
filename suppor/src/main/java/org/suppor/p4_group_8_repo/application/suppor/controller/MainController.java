@@ -1,4 +1,4 @@
-package org.suppor.p4_group_8_repo.application.suppor;
+package org.suppor.p4_group_8_repo.application.suppor.controller;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.Scene;

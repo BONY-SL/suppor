@@ -88,11 +88,6 @@ public abstract class World extends Pane {
     public void add(Actor actor) {
         getChildren().add(actor);
     }
-
-    public void remove(Actor actor) {
-        getChildren().remove(actor);
-    }
-
     public <A extends Actor> List<A> getObjects(Class<A> cls) {
         ArrayList<A> someArray = new ArrayList<A>();
         for (Node n: getChildren()) {

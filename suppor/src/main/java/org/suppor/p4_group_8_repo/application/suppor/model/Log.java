@@ -32,11 +32,6 @@ public class Log extends Actor implements Updatable {
         setY(ypos);
         speed = s;
     }
-
-    protected boolean getLeft() {
-        return speed < 0;
-    }
-
     @Override
     public void update() {
 

@@ -5,7 +5,7 @@ import org.suppor.p4_group_8_repo.application.suppor.controller.Updatable;
 
 public class WetTurtle extends Actor implements Updatable {
     private final Image[] images = new Image[4];
-    private int speed;
+    private final int speed;
     private boolean sunk = false;
 
     @Override
@@ -27,12 +27,6 @@ public class WetTurtle extends Actor implements Updatable {
         speed = s;
         setImage(images[1]);  // Start with the second frame (Wet Turtle)
     }
-
-    // Getter for the sunk status
-    public boolean isSunk() {
-        return sunk;
-    }
-
     @Override
     public void update() {
         handleWrapAround(); // Ensure wrap-around is handled every frame
@@ -51,7 +45,7 @@ public class WetTurtle extends Actor implements Updatable {
             sunk = false;
         } else if (now / 900000000 % 4 == 3) {
             setImage(images[3]);
-            sunk = true;
+            sunk = false;
         }
     }
 
