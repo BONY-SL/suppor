@@ -1,49 +1,65 @@
 package org.suppor.p4_group_8_repo.application.suppor.model;
 
 import javafx.scene.image.Image;
+import org.suppor.p4_group_8_repo.application.suppor.controller.Updatable;
 
-public class WetTurtle extends Actor {
-    Image t1;
-    Image t2;
-    Image t3;
-    Image t4;
-    int speed;
-    boolean sunk = false;
+public class WetTurtle extends Actor implements Updatable {
+    private final Image[] images = new Image[4];
+    private int speed;
+    private boolean sunk = false;
 
     @Override
     public void act(long now) {
-
-        if (now / 900000000 % 4 == 0) {
-            setImage(t2); // Replaced 'turtle2' with 't2'
-            sunk = false;
-        } else if (now / 900000000 % 4 == 1) {
-            setImage(t1); // Replaced 'turtle1' with 't1'
-            sunk = false;
-        } else if (now / 900000000 % 4 == 2) {
-            setImage(t3); // Replaced 'turtle3' with 't3'
-            sunk = false;
-        } else if (now / 900000000 % 4 == 3) {
-            setImage(t4); // Replaced 'turtle4' with 't4'
-            sunk = true;
-        }
-
+        updateTurtleFrame(now);
         move(speed, 0);
-        if (getX() > 600 && speed > 0) setX(-200);
-        if (getX() < -75 && speed < 0) setX(600);
+        handleWrapAround();
     }
 
-    public WetTurtle(int xpos, int ypos, int s, int w, int h) {
-        t1 = new Image("/images/TurtleAnimation/TurtleAnimation1.png", w, h, true, true);
-        t2 = new Image("/images/TurtleAnimation/TurtleAnimation2Wet.png", w, h, true, true);
-        t3 = new Image("/images/TurtleAnimation/TurtleAnimation3Wet.png", w, h, true, true);
-        t4 = new Image("/images/TurtleAnimation/TurtleAnimation4Wet.png", w, h, true, true);
+    // Constructor to initialize the WetTurtle object
+    public WetTurtle(int xpos, int ypos, int s, int width, int height) {
+        images[0] = new Image("/images/TurtleAnimation/TurtleAnimation1.png", width, height, true, true);
+        images[1] = new Image("/images/TurtleAnimation/TurtleAnimation2Wet.png", width, height, true, true);
+        images[2] = new Image("/images/TurtleAnimation/TurtleAnimation3Wet.png", width, height, true, true);
+        images[3] = new Image("/images/TurtleAnimation/TurtleAnimation4Wet.png", width, height, true, true);
+
         setX(xpos);
         setY(ypos);
         speed = s;
-        setImage(t2); // Set initial image to 't2'
+        setImage(images[1]);  // Start with the second frame (Wet Turtle)
     }
 
+    // Getter for the sunk status
     public boolean isSunk() {
         return sunk;
+    }
+
+    @Override
+    public void update() {
+        handleWrapAround(); // Ensure wrap-around is handled every frame
+    }
+
+
+    private void updateTurtleFrame(long now) {
+        if (now / 900000000 % 4 == 0) {
+            setImage(images[0]);
+            sunk = false;
+        } else if (now / 900000000 % 4 == 1) {
+            setImage(images[1]);
+            sunk = false;
+        } else if (now / 900000000 % 4 == 2) {
+            setImage(images[2]);
+            sunk = false;
+        } else if (now / 900000000 % 4 == 3) {
+            setImage(images[3]);
+            sunk = true;
+        }
+    }
+
+    private void handleWrapAround() {
+        if (getX() > 600) { // If the WetTurtle moves off the right edge
+            setX(-130); // Reset to the left side (assuming 130 is the width of the turtle)
+        } else if (getX() < -130) { // If the WetTurtle moves off the left edge
+            setX(600); // Reset to the right side
+        }
     }
 }

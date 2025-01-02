@@ -73,4 +73,7 @@ public abstract class Sprite {
 
     // Abstract render method for subclasses to implement
     public abstract void render();
+
+
+
 }

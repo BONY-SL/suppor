@@ -5,7 +5,7 @@ import javafx.scene.canvas.Canvas;
 
 public abstract class UI {
 
-    private Canvas canvas;
+    private final Canvas canvas;
 
     public UI(Canvas canvas) {
         this.canvas = canvas;

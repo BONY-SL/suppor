@@ -8,7 +8,7 @@ public class Car extends Sprite {
 
     @Override
     public void render() {
-        // Render the car (placeholder for actual rendering logic, e.g. on a canvas)
+        // Render the car (placeholder for actual rendering logic, e.g., on a canvas)
         System.out.println("Rendering Car at: (" + getX() + ", " + getY() + ")");
     }
 
