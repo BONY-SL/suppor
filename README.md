@@ -5,7 +5,7 @@
    <h3>1. Core Application Flow</h3>
     <p><strong>Main Entry Point:</strong> <code>Main.java</code> serves as the entry point, initializing and running the application.</p>
 
-  <h3>2. Entity Management</h3>
+  <h3>2. Model Management</h3>
     <p><strong>Model Classes:</strong> Defines various entities such as:</p>
     <ul>
         <li><strong>Animals</strong> (<code>Animal.java</code>): Represents game animals.</li>
