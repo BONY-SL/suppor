@@ -10,11 +10,11 @@ import org.suppor.p4_group_8_repo.application.suppor.view.Digit;
 public class MainController {
 
     AnimationTimer timer;
-    MyStage background;
+    MyStageController background;
     Animal animal;
 
     public Scene initializeScene() {
-        background = new MyStage();
+        background = new MyStageController();
         Scene scene = new Scene(background, 550, 750);
 
         // Add game elements to the background
@@ -44,11 +44,11 @@ public class MainController {
         background.add(new WetTurtle(200, 217, -1, 130, 130));
 
         // Set up the end zones
-        background.add(new End(13, 96));
-        background.add(new End(130, 96));
-        background.add(new End(130 + 130 - 13, 96));
-        background.add(new End(130 + 130 - 13 + 130 - 13 + 1, 96));
-        background.add(new End(130 + 130 - 13 + 130 - 13 + 130 - 13 + 3, 96));
+        background.add(new EndController(13, 96));
+        background.add(new EndController(130, 96));
+        background.add(new EndController(130 + 130 - 13, 96));
+        background.add(new EndController(130 + 130 - 13 + 130 - 13 + 1, 96));
+        background.add(new EndController(130 + 130 - 13 + 130 - 13 + 130 - 13 + 3, 96));
 
         // Set up animal
         animal = new Animal("/images/frogger/froggerUp.png");
@@ -115,8 +115,9 @@ public class MainController {
     }
 
     public void setNumber(int n) {
-        int shift = 0;
 
+
+        int shift = 0;
         // Clear previous digits (remove old Digit objects)
         background.clearDigits();
 

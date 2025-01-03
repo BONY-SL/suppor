@@ -18,11 +18,10 @@ ext {
     javafxVersion = '17.0.6'
 }
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 application {
@@ -30,16 +29,22 @@ application {
     mainClass = 'org.suppor.p4_group_8_repo.application.suppor.Main'
 }
 
+
 javafx {
-    version = '17.0.6'
+    version = javafxVersion
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.media']
 }
 
 dependencies {
-    implementation('org.controlsfx:controlsfx:11.1.2')
-    implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
-        exclude(group: 'org.openjfx')
-    }
+    // Application dependencies
+    implementation 'org.controlsfx:controlsfx:11.1.2'
+    implementation 'com.dlsc.formsfx:formsfx-core:11.6.0'
+    implementation 'org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0'
+
+    implementation "org.openjfx:javafx-base:${javafxVersion}"
+    implementation "org.openjfx:javafx-graphics:${javafxVersion}"
+    implementation "org.openjfx:javafx-controls:${javafxVersion}"
+    implementation "org.openjfx:javafx-fxml:${javafxVersion}"
     implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
     implementation ('org.junit.jupiter:junit-jupiter-api:5.10.0')
     implementation ('org.junit.jupiter:junit-jupiter-engine')
@@ -55,23 +60,20 @@ dependencies {
     testRuntimeOnly "org.openjfx:javafx-fxml:${javafxVersion}"
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:unchecked"
+}
+
 test {
     useJUnitPlatform()
-
     jvmArgs += [
-            '--module-path', "${sourceSets.main.runtimeClasspath.asPath}:${configurations.testRuntimeClasspath.asPath}",
-            '--add-modules', 'org.junit.jupiter.api,org.junit.jupiter.engine',
-            '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-            '--add-opens', 'javafx.base/javafx.collections=ALL-UNNAMED',
-            '--add-opens', 'javafx.graphics/javafx.scene=ALL-UNNAMED',
-            '--add-opens', 'javafx.controls/javafx.scene.control=ALL-UNNAMED',
-            '--add-opens', 'javafx.fxml/javafx.fxml=ALL-UNNAMED'
+            '--module-path', configurations.runtimeClasspath.asPath,
+            '--add-modules', 'ALL-MODULE-PATH',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.model=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.view=ALL-UNNAMED'
     ]
-
-    testLogging {
-        events 'PASSED', 'FAILED', 'SKIPPED'
-        exceptionFormat 'full'
-    }
 }
 
 tasks.register('modularTest', JavaExec) {
@@ -84,16 +86,15 @@ tasks.register('modularTest', JavaExec) {
             '--details-theme=ascii'
     ]
     jvmArgs += [
-            '--module-path', "${sourceSets.main.runtimeClasspath.asPath}:${configurations.testRuntimeClasspath.asPath}",
-            '--add-modules', 'org.junit.jupiter.api,org.junit.jupiter.engine',
-            '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-            '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-            '--add-opens', 'javafx.base/javafx.collections=ALL-UNNAMED',
-            '--add-opens', 'javafx.graphics/javafx.scene=ALL-UNNAMED',
-            '--add-opens', 'javafx.controls/javafx.scene.control=ALL-UNNAMED',
-            '--add-opens', 'javafx.fxml/javafx.fxml=ALL-UNNAMED'
+            '--module-path', configurations.runtimeClasspath.asPath,
+            '--add-modules', 'ALL-MODULE-PATH',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.model=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.view=ALL-UNNAMED'
     ]
 }
+
 
 jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
@@ -101,7 +102,6 @@ jlink {
     launcher {
         name = 'app'
     }
-
     addExtraDependencies("javafx.controls", "javafx.fxml", "javafx.graphics")
 }
 

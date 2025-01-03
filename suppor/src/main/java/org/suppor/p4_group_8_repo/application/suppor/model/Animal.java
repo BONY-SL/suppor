@@ -26,11 +26,6 @@ public class Animal extends Actor {
         return controller.changeScore();
     }
 
-    public boolean detectCollision(Obstacle obstacle) {
-
-        //return false;
-        return getBoundsInParent().intersects(obstacle.getBoundsInParent());
-    }
 
 
 
