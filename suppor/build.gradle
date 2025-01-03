@@ -75,7 +75,9 @@ test {
     jvmArgs += [
             '--module-path', configurations.testRuntimeClasspath.asPath,
             '--add-modules', 'ALL-MODULE-PATH',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED'
+            '--add-exports', 'javafx.graphics/com.sun.javafx.application=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED'
     ]
 }
 
@@ -93,10 +95,12 @@ tasks.register('modularTest', JavaExec) {
     jvmArgs += [
             '--module-path', configurations.runtimeClasspath.asPath,
             '--add-modules', 'ALL-MODULE-PATH',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED'
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.model=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED',
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.view=ALL-UNNAMED'
     ]
 }
-
 
 jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")

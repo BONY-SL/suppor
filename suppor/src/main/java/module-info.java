@@ -16,6 +16,9 @@ module org.suppor.p4_group_8_repo.application.suppor {
     requires java.base;
 
     // Export and open packages for reflection and testing
-    opens org.suppor.p4_group_8_repo.application.suppor to org.junit.platform.commons;
-
+    exports org.suppor.p4_group_8_repo.application.suppor;
+    opens org.suppor.p4_group_8_repo.application.suppor to javafx.fxml, org.junit.platform.commons;
+    opens org.suppor.p4_group_8_repo.application.suppor.model to org.junit.platform.commons;
+    opens org.suppor.p4_group_8_repo.application.suppor.controller to org.junit.platform.commons;
+    opens org.suppor.p4_group_8_repo.application.suppor.view to org.junit.platform.commons;
 }
