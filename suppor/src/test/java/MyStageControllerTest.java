@@ -1,25 +1,34 @@
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.suppor.p4_group_8_repo.application.suppor.controller.MyStageController;
-import org.suppor.p4_group_8_repo.application.suppor.view.Digit;
+import org.testfx.framework.junit5.ApplicationTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MyStageControllerTest {
+public class MyStageControllerTest extends ApplicationTest {
+
+    private Pane root;
+
+    @Override
+    public void start(Stage stage) {
+        root = new Pane();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
 
     @Test
     void testSetNumberDisplaysCorrectDigits() {
         MyStageController controller = new MyStageController();
+        controller.setNumber(123);
 
-        // Set a number
-        controller.setNumber(50);
-
-        // Check if the digits are added correctly
-        long digitCount = controller.getChildren().stream()
-                .filter(node -> node instanceof Digit)
+        long digitCount = root.getChildren().stream()
+                .filter(node -> node instanceof Node) // Replace Node with your specific type, e.g., Label or Digit
                 .count();
 
-        // Verify there are 3 digits (1, 2, 3)
         assertEquals(3, digitCount, "The number of digits should be 3.");
     }
 }

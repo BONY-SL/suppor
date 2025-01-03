@@ -16,6 +16,7 @@ repositories {
 ext {
     junitVersion = '5.10.0'
     javafxVersion = '17.0.6'
+    testfxVersion = '4.0.13-alpha'
 }
 
 java {
@@ -29,7 +30,6 @@ application {
     mainClass = 'org.suppor.p4_group_8_repo.application.suppor.Main'
 }
 
-
 javafx {
     version = javafxVersion
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.media']
@@ -40,7 +40,6 @@ dependencies {
     implementation 'org.controlsfx:controlsfx:11.1.2'
     implementation 'com.dlsc.formsfx:formsfx-core:11.6.0'
     implementation 'org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0'
-
     implementation "org.openjfx:javafx-base:${javafxVersion}"
     implementation "org.openjfx:javafx-graphics:${javafxVersion}"
     implementation "org.openjfx:javafx-controls:${javafxVersion}"
@@ -50,8 +49,14 @@ dependencies {
     implementation ('org.junit.jupiter:junit-jupiter-engine')
 
     // JUnit 5 dependencies for testing
+    testImplementation "org.testfx:testfx-core:4.0.15-alpha"
+    testImplementation "org.testfx:testfx-junit5:4.0.15-alpha"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+
+    // TestFX dependencies for testing (JUnit5 integration)
+    testImplementation "org.testfx:testfx-junit5:${testfxVersion}"
+    testImplementation "org.testfx:testfx-core:${testfxVersion}"
 
     // JavaFX runtime dependencies for testing
     testRuntimeOnly "org.openjfx:javafx-base:${javafxVersion}"
@@ -60,6 +65,7 @@ dependencies {
     testRuntimeOnly "org.openjfx:javafx-fxml:${javafxVersion}"
 }
 
+
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs << "-Xlint:unchecked"
 }
@@ -67,14 +73,13 @@ tasks.withType(JavaCompile).configureEach {
 test {
     useJUnitPlatform()
     jvmArgs += [
-            '--module-path', configurations.runtimeClasspath.asPath,
+            '--module-path', configurations.testRuntimeClasspath.asPath,
             '--add-modules', 'ALL-MODULE-PATH',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.model=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.view=ALL-UNNAMED'
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED'
     ]
 }
+
+
 
 tasks.register('modularTest', JavaExec) {
     group = 'verification'
@@ -88,10 +93,7 @@ tasks.register('modularTest', JavaExec) {
     jvmArgs += [
             '--module-path', configurations.runtimeClasspath.asPath,
             '--add-modules', 'ALL-MODULE-PATH',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.model=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.controller=ALL-UNNAMED',
-            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor.view=ALL-UNNAMED'
+            '--add-opens', 'org.suppor.p4_group_8_repo.application.suppor/org.suppor.p4_group_8_repo.application.suppor=ALL-UNNAMED'
     ]
 }
 
