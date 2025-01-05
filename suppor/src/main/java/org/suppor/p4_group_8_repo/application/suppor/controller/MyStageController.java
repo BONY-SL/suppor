@@ -1,6 +1,7 @@
 package org.suppor.p4_group_8_repo.application.suppor.controller;
 
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -12,6 +13,12 @@ import java.util.Objects;
 public class MyStageController extends World {
 
     private MediaPlayer mediaPlayer;
+
+    private final Pane rootPane = new Pane();
+
+    public Pane getRootPane() {
+        return rootPane;
+    }// Initialize rootPane
 
     @Override
     public void act(long now) {

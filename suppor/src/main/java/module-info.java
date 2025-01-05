@@ -12,7 +12,7 @@ module org.suppor.p4_group_8_repo.application.suppor {
     requires org.junit.jupiter.engine;
     requires org.junit.platform.commons;
 
-    // JavaFX reflection support for testing
+    // JavaFX's reflection support for testing
     requires java.base;
 
     // Export and open packages for reflection and testing
